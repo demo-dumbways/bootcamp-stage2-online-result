@@ -1,327 +1,196 @@
-## Pengenalan TypeScript
+## TypeScript di React
 
-### Apa itu TypeScript?
+### Setup Proyek React Menggunakan Vite dan TypeScript
 
-TypeScript adalah bahasa pemrograman berbasis JavaScript yang menambahkan fitur tipe data statis.
+#### Setup Proyek
 
-Dengan TypeScript, kamu bisa menangkap kesalahan kode lebih awal, membuat kode lebih mudah dipelihara, dan lebih aman untuk project besar kedepannya.
+- Untuk memulai, kita akan menggunakan Vite yang merupakan tool build cepat untuk aplikasi modern.
 
-### Setup Project Typescript
+- Jalankan perintah berikut di terminal untuk membuat proyek React baru dengan TypeScript:
 
-1. Pastikan kamu sudah melakukan instalasi Node.JS ya sebelumnya.
+  ```bash
+  npm create vite@latest
+  ```
 
-2. Setup project node.js dengan perintah di terminal :
+- Isikan nama projectnya
+- Pilih `React`
+- Pilih `TypeScript`
 
-```bash
-npm init -y
-```
+- Contohnya sebagai berikut :
 
-3. Instal dependencies typescript dengan perintah di terminal :
+  ![alt text](image.png)
 
-```bash
-npm install -D typescript
-```
+  ```bash
+  cd nama-projectmu
+  npm install
+  npm run dev
+  ```
 
-Challenge : kenapa installnya ada -D nya coba?
+- Hasilnya :
 
-4. Lalu jalankan perintah berikut di terminal :
+  ![alt text](image-1.png)
 
-```bash
-npx tsc --init
-```
+#### Struktur Proyek 
 
-5. Sekarang, bikin file bernama `index.ts` lalu tuliskan code :
+Vite akan menghasilkan struktur proyek dengan file `.tsx` yang sudah siap digunakan dengan TypeScript.
 
-```ts
-console.log("Hello World");
-```
+### Penggunaan Tipe TypeScript di Komponen React
 
-6. Install package yang bernama ts-node juga di terminal :
+#### Definisi Props dengan TypeScript
 
-```bash
-npm install -D ts-node
-```
+Kamu bisa mendefinisikan tipe props yang diterima oleh komponen dengan membuat interface atau type.
 
-7. Sekarang jalankan file typescript-nya dengan menggunakan perintah di terminal :
+Contoh:
 
-```bash
-ts-node index.ts
-```
-
-### Tipe Dasar TypeScript
-
-Pada TypeScript ada beberapa tipe dasar yang wajib kamu ketahui :
-
-#### 1. Primitive Types :
-
-Tipe data dasar seperti `number`, `string`, dan `boolean`. Mirip seperti JavaScript, cuma TypeScript ini bisa memastikan kamu tidak salah tipe.
-
-Misal :
-
-```ts
-let age: number = 25;
-let name: string = "Naruto";
-let isStudent: boolean = true;
-```
-
-#### 2. Type Any dan Unknown
-
-Tipe data `any` bisa menampung semua tipe data, tapi biasanya kalau kita menggunakan TypeScript hampir pasti sebaiknya tidak menggunakan `any` ya, sama aja kek JavaScript dong kalau kita buat `any` semua? :D
-
-Menggunakan `unknown` akan lebih aman karena harus jelas tipenya apa nanti
-
-Misal :
-
-```ts
-let vAny: any = 10; // bisa memasukkan data apapun ke any
-let vUnknown: unknown = 10; // bisa juga memasukkan data apapun seperti any
-
-let s1: string = vAny; // any bisa dimasukkan ke data apapun
-let s2: string = vUnknown; // ❌ tidak bisa, karena kita tidak tau ini tipe datanya apa (kecuali kita melakukan type assertion)
-let s3: string = vUnkown as string; // ✅ bisa karena kita memberikan kepastian bahwa data ini adalah string, konsepnya bernama type assertion
-
-vAny.method(); // Ok; semuanya bisa dianggap bisa oleh any
-vUnknown.method(); // ❌ Tidak ok; kita tidak tau apapun dari variable ini
-```
-
-#### 3. Union dan Intersection Types
-
-Union mengizinkan variable memiliki lebih dari satu tipe. Membacanya `ATAU`
-
-Intersection menggabungkan beberapa tipe menjadi satu. Cara bacanya `DAN`
-
-Misal :
-
-```ts
-// union
-
-let value: string | number; // string ATAU number
-value = "hello"; // valid
-value = 42; // valid juga
-
-// intersection
-
-type A = {
-  a: string;
-};
-
-type B = {
-  b: number;
-};
-
-let value: A & B; // tipe A DAN tipe B
-
-value = { a: "hello", b: 42 }; // valid
-```
-
-Catatan : untuk `type` ini nanti akan kita bahas lebih dalam.
-
-#### 4. Literal Types
-
-Membatasi nilai yang bisa digunakan pada variable dengan menggunakan literal types.
-
-Misal :
-
-```ts
-type Direction = "left" | "right";
-let direction1: Direction = "kiri"; // ❌ error, Direction bukan tipe string, tapi tipenya ya literally "left" dan "right"
-let direction2: Direction = "left"; // ✅
-```
-
-Catatan : kalau kamu pakai VSCode, coba teken `CTRL + Spasi` di antara petik (""), akan muncul tuh suggestionnya `"left"` dan `"right"`
-
-#### 5. Enum
-
-Tipe khusus untuk menghimpun nilai konstan dengan nama yang lebih mudah dibaca dan rapih.
-
-Misal :
-
-```ts
-enum Color {
-  Red,
-  Green,
-  Blue,
+```jsx
+// src/components/Button.tsx
+interface ButtonProps {
+  label: string;
+  onClick?: () => void;
 }
 
-let color: Color = Color.Green;
-
-console.log(color); // 1
+export function Button({ onClick, label }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>;
+}
 ```
 
-Catatan : Enum ini akan menghasilkan nilai index, sesuai urutannya.
+Challenge : kenapa disini kita membutuhkan `export` ya pada function Button?
 
-Kalau mau ada isi nilainya yang lain bisa menggunakan assignment `=`, contohnya seperti ini :
+Lalu coba, gunakan component tersebut :
 
-```ts
-enum Color {
-  Red = "Red",
-  Green = "Green",
-  Blue = "Blue",
+```jsx
+// src/App.tsx
+import { Button } from "./components/Button";
+
+function App() {
+  return <Button label="Halo Guys" onClick={() => console.log("test")}/>;
 }
 
-let color: Color = Color.Green;
+export default App;
+```
+Kamu juga bisa melakukan pengembangan supaya button tersebut lebih customizable, contoh :
 
-console.log(color); // Green
+```jsx
+// src/components/Button.tsx
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  label: string;
+}
+
+export function Button({ onClick, label }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>;
+}
 ```
 
-### Interfaces dan Type Aliases
+Challenge : coba pikirkan apa bedanya
 
-#### 1. Interface
+#### State dengan TypeScript
 
-Sebuah blueprint berbentuk `object` untuk menentukan properti dan tipe data yang harus dimiliki `object` tersebut.
+Untuk mendefinisikan tipe state di komponen React, gunakan `useState` dengan tipe generik.
 
-Misal :
+Contoh:
+```jsx
+// src/components/Counter.tsx
 
-```ts
+import { Counter } from "./components/Counter";
+
+function App() {
+  return <Counter />;
+}
+
+export default App;
+```
+
+### Props dan State dengan TypeScript, Termasuk Penanganan Tipe Kompleks
+
+#### Props dengan Tipe Kompleks
+
+Props bisa menggunakan tipe kompleks seperti objek atau array, dan TypeScript akan membantu memastikan tipe tersebut konsisten.
+
+Contoh:
+
+```jsx
 interface User {
+  id: number;
   name: string;
+}
+
+interface UserListProps {
+  users: User[];
+}
+
+const UserList: React.FC<UserListProps> = ({ users }) => (
+  <ul>
+    {users.map((user) => (
+      <li key={user.id}>{user.name}</li>
+    ))}
+  </ul>
+);
+```
+
+#### State dengan Objek
+
+Kamu juga bisa menggunakan objek sebagai state dan TypeScript akan memeriksa tipe dari setiap properti.
+
+Contoh:
+
+```jsx
+interface FormState {
+  username: string;
   age: number;
 }
 
-let user: User = {
-  name: "Sasuke",
-  age: 27,
+const [formState, setFormState] = useState<FormState>({
+  username: "",
+  age: 0,
+});
+```
+
+### Penggunaan TypeScript dengan Hooks (useState, useEffect) dan Custom Hooks
+
+#### `useState` dengan TypeScript
+
+Ketika menggunakan `useState`, kamu bisa menentukan tipe state untuk memastikan data yang dikelola sesuai dengan ekspektasi.
+
+Contoh:
+
+```jsx
+const [isLoading, setIsLoading] = useState<boolean>(true);
+```
+
+#### `useEffect` dengan TypeScript
+
+`useEffect` bisa digunakan dengan TypeScript tanpa banyak perubahan, namun pastikan dependency array sesuai dengan tipe yang diharapkan.
+
+Contoh:
+
+```jsx
+useEffect(() => {
+  console.log("Component did mount");
+}, []);
+```
+
+#### Custom Hooks dengan TypeScript
+
+Custom hooks bisa dibuat dengan TypeScript untuk mendukung berbagai skenario yang lebih kompleks.
+
+Contoh:
+
+```jsx
+const useFetchData = <T,>(
+  url: string
+): { data: T | null; error: string | null } => {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then(setData)
+      .catch(setError);
+  }, [url]);
+
+  return { data, error };
 };
 ```
 
-Challenge : coba deh kamu tidak isi `age`-nya, pasti bakalan jadi merah, nah kalau aku pengin `age`-nya opsional, gimana yaa?
-
-#### 2. Type Aliases
-
-Alternatif dari interface yang lebih fleksibel. Type Aliases bisa digunakan untuk tipe yang sederhana maupun yang kompleks.
-
-Misal :
-
-```ts
-type User = {
-  name?: string;
-  email: string;
-  password: string;
-};
-
-let user: User = {
-  email: "surya@gmail.com",
-  password: "xxxx",
-};
-```
-
-#### Extending Interfaces dan Type Aliases
-
-Kamu bisa melakukan extending / perpanjangan / intersection pada `Type Aliases` maupun `Interfaces`.
-
-Contohnya di Interfaces :
-
-```ts
-interface User {
-  name?: string;
-  email: string;
-  password: string;
-}
-
-interface Profile {
-  image?: string;
-  age?: number;
-  birthDate?: Date;
-  address: string;
-};
-
-interface UserProfile extends User, Profile {}
-```
-
-Contoh dengan Type Aliases :
-
-```ts
-type User = {
-  name?: string;
-  email: string;
-  password: string;
-};
-
-type Profile = {
-  image?: string;
-  age?: number;
-  birthDate?: Date;
-  address: string;
-};
-
-type UserProfile = User & Profile;
-
-let userProfile: UserProfile = {
-  name: "surya",
-  email: "surya@gmail.com",
-  password: "xxxx",
-  address: "Depok",
-};
-```
-
-#### Lalu Perbedaan Interface dan Type Aliases Apa?
-
-Tergantung praktik dan preferensinya, ada beberapa codebase yang menggunakan OOP, maka `interface` lebih cocok.
-
-Tapi kalau menurut penulis pribadi, hampir selalu gunakan `type aliases` saja supaya mudah nantinya.
-
-Tapi ada juga developer yang senangnya selalu gunakan `interface` jika tidak perlu `type aliases`.
-
-Tapi kalau kamu mau lihat perbandingan secara teknisnya sebagai berikut :
-
-![alt text](image.png)
-
-Catatan : Praktis mudahnya, tidak usah dihafalkan, gunakan senyaman dan sebutuhnya saja. Yang terpenting adalah buat jadi konsisten / punya prinsip di codebase yang kamu buat, supaya rapih.
-
-### Konfigurasi dan Kompilasi TypeScript
-
-#### Apa itu tsconfig.json?
-
-Simpelnya, file `tsconfig.json` ini digunakan untuk konfigurasi typescript. 
-
-Kamu pengin `"typescript ini membantu kek gimana"` bisa diatur di file ini.
-
-Catatan : lagi-lagi, tidak perlu kamu hafalin semua konfigurasi di `tsconfig.json` ini, ubah sesuai kebutuhan saja. Atau kalau misal ada error, tinggal kamu cari errornya di google "oh disuruh ubah ini di `tsconfig.json`", barulah kamu ubah.
-
-Contoh konfigurasi simpel `tsconfig.json` :
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "strict": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "esModuleInterop": true
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
-}
-```
-
-Penjelasan :
-
-**`target`: "ES6"** =>
-Menentukan versi JavaScript yang dihasilkan setelah kompilasi. Dalam contoh ini, TypeScript akan menghasilkan kode JavaScript yang sesuai dengan ECMAScript 6 (ES2015). Versi ini mendukung fitur modern seperti arrow functions, let/const, class, dan lainnya.
-
-**`module`: "commonjs"** => Mengatur format module yang digunakan, yaitu CommonJS, yang merupakan standar module system di Node.js. Ini memastikan bahwa kode yang dihasilkan dapat diimpor dan diekspor menggunakan sintaks CommonJS (`require` dan `module.exports`).
-
-**`strict`: true** => Mengaktifkan mode ketat TypeScript, yang memberlakukan serangkaian aturan pengecekan tipe yang lebih ketat.
-
-**`outDir`: "./dist"** => Menentukan direktori output tempat TypeScript akan menyimpan file hasil kompilasi JavaScript.
-
-**`rootDir`: "./src"** => Mengatur direktori root untuk file sumber TypeScript.
-
-**`esModuleInterop`: true** => Dengan pengaturan ini, kamu bisa mengimpor module CommonJS menggunakan sintaks import ES6.
-
-**`include`** => Bagian ini menentukan file dan folder yang harus diikutsertakan dalam proses kompilasi. Pada contoh di atas, TypeScript akan mencari semua file dengan ekstensi `.ts` di dalam folder `src` dan subfolder-nya.
-
-***`exclude`*** => Bagian ini menentukan file atau folder yang akan dikecualikan dari kompilasi. Dalam contoh ini, folder `node_modules` tidak akan dikompilasi, karena berisi dependencies yang tidak perlu dikompilasi ulang.
-
-#### Kompilasi TypeScript ke JavaScript
-
-TypeScript ke JavaScript. Kamu bisa mengatur output dan lokasi file hasil kompilasi di `tsconfig.json`.
-
-Contoh perintah kompilasi:
-
-```bash
-npx tsc
-```
-
-Disini akan dihasilkan file `index.js` di folder dist (sesuai konfigurasi yang kita buat) 
+Dengan menggunakan TypeScript di React, kode yang dihasilkan akan lebih aman dan mudah untuk di-maintain, serta mengurangi risiko bug.
