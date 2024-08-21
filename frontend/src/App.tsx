@@ -3,8 +3,6 @@
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
-import { useFetchData } from "./hooks/useFetchData";
-
 // function App() {
 //   const [count, setCount] = useState(0)
 
@@ -90,6 +88,8 @@ import { useFetchData } from "./hooks/useFetchData";
 // export default App;
 
 // ===
+
+// import { useFetchData } from "./hooks/useFetchData";
 
 // interface User {
 //   id: number;
