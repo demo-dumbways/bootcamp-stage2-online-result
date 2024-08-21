@@ -36,20 +36,28 @@
 
 // ===
 
-// import { Button } from "./components/Button";
+// function Hello() {
+//   return <p> Hello </p>;
+// }
 
 // function App() {
-//   return <Button label="Halo Guys" onClick={() => console.log("test")} />;
+//   return (
+//     <>
+//       <Hello />
+//       <Hello />
+//       <Hello />
+//     </>
+//   );
 // }
 
 // export default App;
 
 // ===
 
-// import { Counter } from "./components/Counter";
+// import { Button } from "./components/Button";
 
 // function App() {
-//   return <Counter />;
+//   return <Button label="Halo Guys" onClick={() => console.log("test")} />;
 // }
 
 // export default App;
@@ -79,10 +87,50 @@
 
 // ===
 
+// import { Counter } from "./components/Counter";
+
+// function App() {
+//   return <Counter />;
+// }
+
+// export default App;
+
+// ===
+
 // import { Form } from "./components/Form";
 
 // function App() {
 //   return <Form />;
+// }
+
+// export default App;
+
+// ===
+
+// import { useEffect, useState } from "react";
+
+// interface User {
+//   id: number;
+//   name: string;
+//   username: string;
+// }
+
+// function App() {
+//   const [users, setUsers] = useState<User[]>([]);
+
+//   useEffect(() => {
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//       .then((response) => response.json())
+//       .then((data) => setUsers(data));
+//   }, []);
+
+//   return (
+//     <ul>
+//       {users.map((user) => (
+//         <li key={user.id}>{user.name}</li>
+//       ))}
+//     </ul>
+//   );
 // }
 
 // export default App;
