@@ -3,6 +3,8 @@
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
+import { useFetchData } from "./hooks/useFetchData";
+
 // function App() {
 //   const [count, setCount] = useState(0)
 
@@ -46,10 +48,65 @@
 
 // ===
 
-import { Counter } from "./components/Counter";
+// import { Counter } from "./components/Counter";
 
-function App() {
-  return <Counter />;
-}
+// function App() {
+//   return <Counter />;
+// }
 
-export default App;
+// export default App;
+
+// ===
+
+// import { UserList } from "./components/UserList";
+
+// function App() {
+//   return (
+//     <UserList
+//       users={[
+//         {
+//           id: 1,
+//           name: "surya",
+//         },
+//         {
+//           id: 2,
+//           name: "elz",
+//         },
+//       ]}
+//     />
+//   );
+// }
+
+// export default App;
+
+// ===
+
+// import { Form } from "./components/Form";
+
+// function App() {
+//   return <Form />;
+// }
+
+// export default App;
+
+// ===
+
+// interface User {
+//   id: number;
+//   name: string;
+//   username: string;
+// }
+
+// function App() {
+//   const { data, error } = useFetchData<User>(
+//     `https://jsonplaceholder.typicode.com/users`
+//   );
+
+//   if (error) {
+//     return <>{JSON.stringify(error)}</>;
+//   }
+
+//   return <>{JSON.stringify(data)}</>;
+// }
+
+// export default App;
