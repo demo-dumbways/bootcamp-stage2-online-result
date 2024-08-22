@@ -1,9 +1,15 @@
+import { useLoginForm } from "../hooks/use-login-form";
+
 export function LoginForm() {
+  const { handleChange, handleSubmit } = useLoginForm();
+
   return (
     <form
+      onSubmit={handleSubmit}
       style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}
     >
       <input
+        onChange={handleChange}
         name="emailOrUsername"
         placeholder="Email/Username"
         style={{
@@ -15,6 +21,7 @@ export function LoginForm() {
         }}
       />
       <input
+        onChange={handleChange}
         name="password"
         placeholder="Password"
         style={{

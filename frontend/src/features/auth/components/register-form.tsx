@@ -1,7 +1,15 @@
+import { useRegisterForm } from "../hooks/use-register-form";
+
 export function RegisterForm() {
+  const { handleChange, handleSubmit } = useRegisterForm();
+
   return (
-    <form style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}
+    >
       <input
+        onChange={handleChange}
         name="fullName"
         placeholder="Full Name"
         style={{
@@ -13,6 +21,7 @@ export function RegisterForm() {
         }}
       />
       <input
+        onChange={handleChange}
         name="email"
         placeholder="Email"
         style={{
@@ -24,6 +33,7 @@ export function RegisterForm() {
         }}
       />
       <input
+        onChange={handleChange}
         name="password"
         placeholder="Password"
         style={{
