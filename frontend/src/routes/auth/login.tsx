@@ -1,6 +1,6 @@
 import { LoginForm } from "../../features/auth/components/login-form";
 
-export function LoginRoute() {
+export default function LoginRoute() {
   return (
     <div
       style={{

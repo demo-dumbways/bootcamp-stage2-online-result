@@ -1,6 +1,6 @@
 import { RegisterForm } from "../../features/auth/components/register-form";
 
-export function RegisterRoute() {
+export default function RegisterRoute() {
   return (
     <div
       style={{

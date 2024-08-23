@@ -1,16 +1,35 @@
-import { useRegisterForm } from "../hooks/use-register-form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const registerSchema = z.object({
+  fullName: z.string().min(1, "Full Name is required"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
-  const { handleChange, handleSubmit } = useRegisterForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = (data: RegisterFormInputs) => {
+    console.log(data);
+  };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}
     >
       <input
-        onChange={handleChange}
-        name="fullName"
+        {...register("fullName")}
         placeholder="Full Name"
         style={{
           padding: 10,
@@ -20,9 +39,12 @@ export function RegisterForm() {
           borderRadius: 5,
         }}
       />
+      {errors.fullName && (
+        <p style={{ color: "red", margin: 0 }}>{errors.fullName.message}</p>
+      )}
+
       <input
-        onChange={handleChange}
-        name="email"
+        {...register("email")}
         placeholder="Email"
         style={{
           padding: 10,
@@ -32,10 +54,14 @@ export function RegisterForm() {
           borderRadius: 5,
         }}
       />
+      {errors.email && (
+        <p style={{ color: "red", margin: 0 }}>{errors.email.message}</p>
+      )}
+
       <input
-        onChange={handleChange}
-        name="password"
+        {...register("password")}
         placeholder="Password"
+        type="password"
         style={{
           padding: 10,
           color: "white",
@@ -44,7 +70,12 @@ export function RegisterForm() {
           borderRadius: 5,
         }}
       />
+      {errors.password && (
+        <p style={{ color: "red", margin: 0 }}>{errors.password.message}</p>
+      )}
+
       <button
+        type="submit"
         style={{
           backgroundColor: "#04A51E",
           padding: 10,

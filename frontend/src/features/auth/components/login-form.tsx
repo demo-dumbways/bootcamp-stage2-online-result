@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useLoginForm } from "../hooks/use-login-form";
 
 export function LoginForm() {
   const { handleChange, handleSubmit } = useLoginForm();
+  const navigate = useNavigate()
 
   return (
     <form
@@ -48,7 +50,8 @@ export function LoginForm() {
       </button>
       <div>
         <p style={{ color: "white" }}>
-          Don't have an account yet? Create account
+          Don't have an account yet?{" "}
+          <span onClick={() => navigate("/register")}>Create account</span>
         </p>
       </div>
     </form>
